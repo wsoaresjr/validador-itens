@@ -1,66 +1,94 @@
 # Validador de Itens
 
-Sistema web desenvolvido em Django para gestão e validação de itens educacionais (questões) por diferentes grupos de usuários. Permite upload de arquivos em lote, registro de validações e geração de relatórios.
+🧪 Aplicação web simplificada para validação de itens educacionais por diferentes grupos, com controle de acesso, upload de arquivos em lote e relatórios por grupo e usuário.
 
-## ✨ Funcionalidades Principais
+## 🛠️ Tecnologias Utilizadas
 
-* Autenticação de usuários com diferentes perfis (administrador, validador)
-* Upload em lote de arquivos PDF
-* Interface de validação (aprovado / reprovado) com comentários
-* Relatórios por grupo e por usuário
-* Exportação de relatórios em PDF
+* 🐍 Python 3.11
+* 🌐 Django 5
+* 🐘 PostgreSQL
+* 🐳 Docker e Docker Compose
+* 🚦 Nginx
+* 🔐 Certbot + Let's Encrypt
+* 🖥️ Portainer (para gerenciamento de containers)
 
-## ⚖️ Tecnologias Utilizadas
+## ✨ Funcionalidades
 
-* Python 3.11
-* Django 5.2
-* SQLite (padrão) ou PostgreSQL (recomendado para produção)
-* Bootstrap 5.3 (interface)
+* 🔐 Autenticação de usuários por grupo
+* 📤 Upload de arquivos PDF com identificação de itens
+* 📝 Registro de validações (por grupo e por usuário)
+* 📊 Geração de relatórios:
+  * 🧑‍🤝‍🧑 Validações por Grupo
+  * 👤 Validações por Usuário
+  * 🧾 Relatório em PDF
+* ⚙️ Painel administrativo Django (/admin)
 
-## ✍️ Instalação Local
+## 🚀 Instalação com Docker
 
-```bash
-# Clone o repositório
-$ git clone https://github.com/seu-usuario/validador-itens.git
-$ cd validador-itens
-
-# Crie e ative o ambiente virtual
-$ python -m venv venv
-$ source venv/bin/activate  # Linux/macOS
-$ .\venv\Scripts\activate  # Windows
-
-# Instale as dependências
-(venv) $ pip install -r requirements.txt
-
-# Aplique as migrações e inicie o servidor local
-(venv) $ python manage.py migrate
-(venv) $ python manage.py runserver
-```
-
-## ✉️ Credenciais de Teste (opcional)
-
-Crie superusuário com:
+### 1. Clone o repositório
 
 ```bash
-(venv) $ python manage.py createsuperuser
+git clone git@github.com:usuario/validador-itens.git
+cd validador-itens
 ```
 
-## 🔧 Estrutura do Projeto
+### 2. Crie o arquivo `.env`
 
-```
-validador-itens/
-├── core/               # App principal com views, templates, urls
-├── static/             # Arquivos estáticos (CSS, JS, imagens)
-├── templates/          # Templates HTML
-├── media/              # Pasta para arquivos enviados (PDFs)
-├── appvalidador/       # Configuração geral do Django
-├── manage.py
-└── requirements.txt
+Crie um arquivo `.env` na raiz do projeto com as variáveis:
+
+```ini
+DB_NAME=validador
+DB_USER=usuario
+DB_PASSWORD=senha
 ```
 
-## 📚 Licença
+### 3. Suba os containers
 
-Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](LICENSE) para detalhes.
+```bash
+docker compose up --build -d
+```
 
----
+### 4. Migrações e superusuário
 
+```bash
+docker compose exec web bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+### 5. Gere os arquivos estáticos
+
+```bash
+python manage.py collectstatic --noinput
+exit
+```
+
+### 6. Gere o certificado SSL (Let's Encrypt)
+
+```bash
+docker compose stop nginx
+mkdir -p certbot/www
+
+docker compose run --rm certbot
+```
+
+### 7. Suba novamente o Nginx com HTTPS
+
+```bash
+docker compose up -d
+```
+
+🌐 Acesse via HTTPS: [https://validacaoitens.com](https://validacaoitens.com)
+
+
+
+## ✅ Boas práticas
+
+* 📄 O arquivo `nginx/default.conf` está em `.gitignore` e não é versionado.
+* 🛡️ Evite expor credenciais. Mantenha as variáveis de ambiente fora do Git.
+* 📊 Utilize o Portainer para monitorar containers.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
