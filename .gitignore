@@ -23,3 +23,9 @@ Thumbs.db
 # Arquivos ou pastas particulares
 Leia-me.txt
 media/
+
+# Arquivos de certificados e configurações sensíveis
+*.pem
+*.key
+certbot/
+nginx/default.conf
