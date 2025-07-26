@@ -20,5 +20,6 @@ Thumbs.db
 **/migrations/*.py
 !**/migrations/__init__.py
 
-# Arquivos particulares
+# Arquivos ou pastas particulares
 Leia-me.txt
+media/
