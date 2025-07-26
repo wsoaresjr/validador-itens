@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% block title %}Histórico de Validações{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Histórico de Itens Validados</h2>
+
+{% if validacoes %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Data</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in validacoes %}
+                <tr>
+                    <td>{{ v.item.titulo }}</td>
+                    <td>{{ v.data|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if v.status == 'validado' %}
+                                bg-success
+                            {% elif v.status == 'nao_validado' %}
+                                bg-danger
+                            {% else %}
+                                bg-secondary
+                            {% endif %}
+                        ">
+                            {{ v.get_status_display }}
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-warning">Você ainda não validou nenhum item.</div>
+{% endif %}
+
+<a href="{% url 'core:dashboard' %}" class="btn btn-outline-primary mt-3">Voltar ao painel</a>
+
+{% endblock %}

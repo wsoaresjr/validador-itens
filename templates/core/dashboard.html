@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% block title %}Painel de Validação{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Itens para validar</h2>
+
+{% if itens_nao_validados %}
+    <ul class="list-group mb-4">
+        {% for item in itens_nao_validados %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ item.titulo }}
+                <a class="btn btn-sm btn-primary" href="{% url 'core:validar_item' item.id %}">Validar</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-info">Nenhum item novo para validar.</div>
+{% endif %}
+
+<hr class="my-4">
+
+<h2 class="mb-3">Itens, inicialmente, reprovados</h2>
+
+{% if itens_rejeitados %}
+    <ul class="list-group mb-4">
+        {% for item in itens_rejeitados %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ item.titulo }}
+                <a class="btn btn-sm btn-warning" href="{% url 'core:validar_item' item.id %}">Reavaliar</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-secondary">Nenhum item foi rejeitado até o momento.</div>
+{% endif %}
+
+<div class="d-flex justify-content-between mt-4">
+    <a href="{% url 'core:historico' %}" class="btn btn-outline-secondary">Ver histórico de validações</a>
+</div>
+
+{% endblock %}
+

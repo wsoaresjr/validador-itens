@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+{% block title %}Relatório por Grupo{% endblock %}
+{% block content %}
+<h2 class="mb-4">Relatório de Validações por Grupo</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Grupo</th>
+            <th>Total de Itens</th>
+            <th>Validados</th>
+            <th>Rejeitados</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in resultados %}
+        <tr>
+            <td>{{ r.grupo }}</td>
+            <td>{{ r.total_itens }}</td>
+            <td>{{ r.validados }}</td>
+            <td>{{ r.rejeitados }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'core:dashboard' %}" class="btn btn-secondary">Voltar</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% block title %}Validar Item{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Validação do Item</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">{{ item.titulo }}</h5>
+        <div class="ratio ratio-4x3 mb-3">
+            <iframe src="{{ item.pdf.url }}" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">Este item está validado?</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="validado"
+                   value="validado"
+                   {% if form.status.value == "validado" %}checked{% endif %}>
+            <label class="form-check-label" for="validado">Sim</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="nao_validado"
+                   value="nao_validado"
+                   {% if form.status.value == "nao_validado" %}checked{% endif %}>
+            <label class="form-check-label" for="nao_validado">Não</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Enviar validação</button>
+    <a href="{% url 'core:dashboard' %}" class="btn btn-secondary">Voltar</a>
+</form>
+
+
+{% endblock %}
